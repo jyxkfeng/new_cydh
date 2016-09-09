@@ -439,136 +439,112 @@
 							$cookieStore.remove('userInfo');
 							userInfo.set($scope.userInfo);
 							console.log(userInfo.get())
-							
-							
-							
+							$scope.open=1; //层级 显示
 							$scope.PlayCollection=userInfo.get().PlayCollection;
 							$scope.PlayStage=userInfo.get().PlayStage;
 							$scope.PlayStatus=userInfo.get().PlayStatus;
 							if($scope.PlayStatus==100){
-								if($scope.PlayCollection==1){
-									if($scope.PlayStage<3){
-										$scope.PlayStage+1;
-										return false;
-									}
-									else{
-										$scope.PlayCollection=2;
-										$scope.PlayStage=1;
-										return false;
-									}
-									
+								if($scope.PlayCollection==1&&$scope.PlayStage==3){
+									$scope.open=2;
 								}
 								else if($scope.PlayCollection==2){
-
-										$scope.PlayCollection+1;
-										return false;
+									$scope.open=3
 								}
-								else if($scope.PlayCollection==3){
-									if($scope.PlayStage<5){
-										$scope.PlayStage+1;
-										return false;
-									}
-									else{
-										$scope.PlayCollection=0;
-										$scope.PlayStage=0;
-										return false;
-									}
+								else if($scope.PlayCollection==1&&$scope.PlayStage<3){
+									$scope.open=1;
 								}
-								
 								
 							}
-						} else {
+							else{
+								$scope.open=$scope.PlayCollection; 
+							}
+						}
+						
+						else {
 							return false;
 						}
 					});
 		}
 		$scope.playGame = function(PlayCollection, PlayStage) {
-			//当前没有玩游戏
-			if(
-			($scope.PlayCollection==0&&$scope.PlayStage==0)||(PlayCollection ==1 && $scope.PlayCollection ==3 && $scope.PlayStatus == 100))
-			{
-				if(PlayCollection==1&&PlayStage==1){
-					console.log("新建游戏");
-					$state.go('touzi',{
-						Playid:1,
-						PlayCollection:1,
-						PlayStage:1
-					})
-					return false;
-				}
-				else{
-					lyer.msg('您必须从第一关开始玩');
-				}
-			}
-			
-			//想玩的层级大于可玩的层级
-			if(PlayCollection > $scope.PlayCollection) {
-				console.log("你没资格玩");
-				lyer.msg('你还未获取此关游戏的资格.请努力!');
-				return false;
-			}
-			if(PlayCollection<$scope.PlayCollection){
-				lyer.msg('您已经玩过此游戏了!',function(){
-					$state.go('touzi',{
-						Playid:1,
-						PlayCollection:PlayCollection,
-						PlayStage:PlayStage
-					})
-				});
-				return false;
-			}
-			////想玩的层级在第一层级
-			if(PlayCollection <= 1) {
-				//第一个必玩的项目判断
-				debugger;
-				if($scope.PlayStage== PlayStage || ($scope.PlayStage < PlayStage && $scope.PlayStatus == 100 && $scope.PlayStage == PlayStage-1)){
-					$state.go('touzi',{
-						Playid:1,
-						PlayCollection:1,
-						PlayStage:PlayStage
-					})
-				}
-				else if($scope.PlayStage < PlayStage ) {	
-					lyer.msg('你还没通过前面一关');
-					return false;
-				} 
-			
-				else if($scope.PlayStage > PlayStage) {
-					lyer.msg('你已经玩过这一关');
-					return false;
-				} 
-			}
-			if(PlayCollection==2||PlayCollection==3){
-				$state.go('touzi',{
-						Playid:1,
-						PlayCollection:PlayCollection,
-						PlayStage:PlayStage
-					})
-				return false;
-			}
-			//点击的正好是当前层级
-			if($scope.PlayCollection==PlayCollection&&$scope.PlayStage==PlayStage){
-				//打开当前关
-				console.log("打开当前关");
-				$state.go('touzi',{
-						Playid:1,
-						PlayCollection:PlayCollection,
-						PlayStage:PlayStage
-					})
-				return false;
-			}
-			
+				
+					if(PlayCollection==1&&PlayStage==1){
+						
+						//playcollection=0,playstage=0或者playcollection=1,playstage=1，playstatus<100,或者playcollection=3，playstatus=100
+						if(($scope.PlayCollection==0&&$scope.PlayStage==0)||($scope.PlayCollection==1&&$scope.PlayStage==1&&$scope.PlayStatus<100)||($scope.PlayCollection==3&&$scope.PlayStatus==100)){
+							$state.go('touzi',{
+								Playid:1,
+								PlayCollection:1,
+								PlayStage:1
+							})	
+						}
+						else{
+								lyer.msg('您还不能玩当前关,或者已经玩过');
+							}
+					}
+					if(PlayCollection==1&&PlayStage==2){
+						
+						//playcollection=1,playstage=1，playstatus=100,
+						//或者playcollection=1,playstage=2,playstatus<100
+						if(($scope.PlayCollection==1&&$scope.PlayStage==1&&$scope.PlayStatus==100)||($scope.PlayCollection==1&&$scope.PlayStage==2&&$scope.PlayStatus<100)){
+							$state.go('touzi',{
+								Playid:1,
+								PlayCollection:1,
+								PlayStage:2
+							})	
+							
+						}
+						else{
+								lyer.msg('您还不能玩当前关,或者已经玩过');
+							}	
+					}
+					if(PlayCollection==1&&PlayStage==3){
+						
+						//playcollection=1,playstage=2，playstatus=100,或者playcollection=1,playstage=3,playstatus<100都可以玩
 
-//			console.log("你有资格玩");
-//			console.log(PlayCollection);
-//			console.log(PlayStage);
-//			//游戏进度查询api/yqsPlay/PlaySpeed/?uid=1&playid=1&playcollection=1&playstage=1
-//		    location.href="index.html#touzi"
-			
-			
+						if(($scope.PlayCollection==1&&$scope.PlayStage==2&&$scope.PlayStatus==100)||($scope.PlayCollection==1&&$scope.PlayStatus==3&&$scope.PlayStatus<100)){
+							$state.go('touzi',{
+								Playid:1,
+								PlayCollection:1,
+								PlayStage:3
+							})	
+						}
+						else{
+							lyer.msg('您还不能玩当前关,或者已经玩过');
+						}
+						
+					}
+					if(PlayCollection==2){
+						
+						//playcollection=1,playstage=3，playstatus=100,或者playcollection=2，playstatus<100
+						if(($scope.PlayCollection==1&&$scope.PlayStage==3&&$scope.PlayStatus==100)||($scope.PlayCollection==2&&$scope.PlayStatus<100)){
+							$state.go('touzi',{
+								Playid:1,
+								PlayCollection:2,
+								PlayStage:PlayStage
+							})	
+						}
+						else{
+							lyer.msg('您还不能玩当前关或者本阶段还有游戏未结束');
+						}
+					}
+					if(PlayCollection==3){
+						$scope.PlayStage
+						$scope.PlayCollection
+						$scope.PlayStatus
+						//playcollection=2,playstatus=100,或者playcollection=3，playstatus<100
+						if(($scope.PlayCollection==2&&$scope.PlayStatus==100)||($scope.PlayCollection==3&&$scope.PlayStatus<100)){
+							$state.go('touzi',{
+								Playid:1,
+								PlayCollection:3,
+								PlayStage:PlayStage
+							})	
+							
+						}
+						else{
+							lyer.msg('您还不能玩当前关或者本阶段还有游戏未结束');
+						}
+					}
 		}
-
-		//api/yqsPlay/PlaySpeed/?uid=1&playid=1&playcollection=1&playstage=1
 
 	
 	}])
@@ -765,8 +741,13 @@
 				rt = angular.fromJson(rt)
 				if(rt.Code == 0&&rt.Data.Data.length>0) {
 					//查询得到游戏进度
+					
+					$scope.userInfo=angular.extend({},rt.Data);
+					$cookieStore.remove('userInfo');
+					userInfo.set($scope.userInfo);
+					$scope.playInfo=$scope.userInfo.Data[0];
+					$cookieStore.remove('playInfo');
 					playInfo.set(rt.Data.Data);
-					$scope.playInfo=playInfo.get()[0];
 					console.log($scope.playInfo);
 					$scope.status=$scope.playInfo.PlayStatus;
 					setInterval(function(){
@@ -798,7 +779,7 @@
 					playInfo.set($scope.playInfo);
 					console.log($scope.playInfo);					
 					return false;
-		}				
+					}				
 			});
 			
 		  $scope.buildNewGame=function(){

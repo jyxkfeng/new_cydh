@@ -1,0 +1,24 @@
+{
+  "name": "jiang",
+  "version": "1.0.0",
+  "description": "cydh",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jyxkfeng/new_cydh.git"
+  },
+  "keywords": [
+    "best"
+  ],
+  "author": "jiang share foun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jyxkfeng/new_cydh/issues"
+  },
+  "homepage": "https://github.com/jyxkfeng/new_cydh#readme"
+}
