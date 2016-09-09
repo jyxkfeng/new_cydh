@@ -1,0 +1,46 @@
+
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>
+	
+	<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background: none; border: none;}
+		</style>
+	<div class="g-body">
+
+		<section class="login_warp warp">
+			<article>
+				<img class="logo" src="images/ico_logo.png"  />
+				<form name="loginForm">
+					<div class="login_box">					
+						<div class="input_text">
+							<span class="ico ico_username"></span>
+							<input name="name" value="" placeholder="请输入用户名"  ng-model='params.name'    ng-required="true"   ng-pattern="/^[0-9A-Za-z]{5,15}$/" />						
+						</div>
+						<div class="input_text">
+							<span class="ico ico_pwd"></span>
+							<input  name="pwd" value="" type="password" placeholder="请输入密码"  ng-model='params.pwd'    ng-required="true"  ng-pattern="/^[0-9A-Za-z]{5,15}$/"  />
+						</div>
+						
+						<input class="btn login_btn" type="submit" value=""  ng-click="login()"></input>
+						<p >
+							<a href="index.html#register/" class="fl">注册</a>
+							<a class="fr">忘记密码？</a>
+						</p>
+						
+					</div>
+				</form>
+				
+			</article>
+		</section>
+	</div>
+
+
+
+
+
+
+
+</body></html>

@@ -1,0 +1,185 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+			<div class="warp">
+			
+			<div class="timer_box" ng-if="status==50" >
+					<i class="icon_clock"></i>剩余时间：{{EndTime}}
+				</div>
+			<div class="touzi_box">
+			<!--没有订单 预览订单-->
+			<div class="" ng-if="status==-1">
+				
+				<div class="input_box clearfix">
+				<i class="icon_touzi"></i><span>投资金额</span>
+				<input type="text" value="{{playInfo.PlayMoney | currency:'￥' }}"   />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_sh"></i><span>收获</span>
+				<input type="text" value="{{playInfo.PlayIncome | currency:'¥'}}"  />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_ghs"></i><span>理财规划书</span>
+				<input type="text" value="{{playInfo.PlayCharter}}" />
+				</div>
+				<div class="qrdk_btn" ng-click="buildNewGame()">
+					确认
+				</div>
+			</div>
+			<!--status==0 产业等待匹配-->
+			<div class="" ng-if="status==0">					
+				<div class="input_box clearfix">
+				<i class="icon_touzi"></i><span>投资金额</span>
+				<input type="text" value="{{playInfo.Money | currency:'￥' }}"   />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_sh"></i><span>收获</span>
+				<input type="text" value="{{playInfo.Income | currency:'¥'}}"  />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_ghs"></i><span>理财规划书</span>
+				<input type="text" value="{{playInfo.Charter}}" />
+				</div>
+				<div class="qrdk_btn cancel_btn">
+					产业正在运行中……
+				</div>
+			</div>
+			
+			
+			<div class＝"" ng-if="status==50">
+				
+				<div class="input_box clearfix" >
+				<i class="icon_username"></i><span>收款人姓名</span>
+				<input type="text" value="{{playInfo.AcceptRealName}}" />
+				</div>
+				<div class="input_box clearfix">
+					<i class="icon_tel"></i><span>电话</span>
+					<input value="{{playInfo.AcceptTel}}"  type="text"  />
+				</div>
+				<div class="input_box clearfix">
+					<i class="icon_card"></i><span>银行卡号</span>
+					<input type="text" value="{{playInfo.AcceptBankCard}}"  />
+				</div>
+				
+				<div class="input_box clearfix">
+					<i class="icon_alipay"></i><span>支付宝账号</span>
+					<input type="text" value="{{playInfo.AcceptAliPayId}}"  />
+				</div>
+				
+				<div class=" input_box clearfix">
+					<i class="icon_jsr"></i><span>推荐人姓名</span>
+					<input type="text" value="{{playInfo.ReferenceRealName}}" />
+				</div>
+				
+				<div class="input_box clearfix">
+					<i class="icon_jsrtel"></i><span>推荐人电话</span>
+					<input type="text" value="{{playInfo.ReferenceTel}}" />
+				</div>
+				<div class="updata_contant" ng-if="status==50">
+					<uploadpic-Directive></uploadpic-Directive>
+					
+				</div>
+				
+			</div>
+			
+			<div class="" ng-if="status==70||status==100">
+				<div class="input_box clearfix" >
+				<i class="icon_username"></i><span>收款人姓名</span>
+				<input type="text" value="{{playInfo.AcceptRealName}}" />
+				</div>
+				<div class="input_box clearfix">
+					<i class="icon_tel"></i><span>电话</span>
+					<input value="{{playInfo.AcceptTel}}"  type="text"  />
+				</div>
+				
+				<div class="qrdk_btn cancel_btn" ng-if="status==70">
+					等待对方确认收款
+				</div>
+				<div class="qrdk_btn cancel_btn" ng-if="status==100">
+					已完成
+				</div>
+			</div>
+			
+				<!--<div class="input_box clearfix">
+				<i class="icon_touzi"></i><span>投资金额</span>
+				<input type="text" value="{{playInfo.Money | currency:'￥' }}"   />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_sh"></i><span>收获</span>
+				<input type="text" value="{{playInfo.Income | currency:'¥'}}"  />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_ghs"></i><span>理财规划书</span>
+				<input type="text" value="{{playInfo.Charter}}" />
+				</div>
+				
+				<div class="input_box clearfix" >
+				<i class="icon_username"></i><span>收款人姓名</span>
+				<input type="text" value="{{playInfo.AcceptRealName}}" />
+				</div>
+				<div class="input_box clearfix">
+					<i class="icon_tel"></i><span>电话</span>
+					<input value="{{playInfo.AcceptTel}}"  type="text"  />
+				</div>
+				<div class="input_box clearfix">
+					<i class="icon_card"></i><span>银行卡号</span>
+					<input type="text" value="{{playInfo.AcceptBankCard}}"  />
+				</div>
+				
+				<div class="input_box clearfix">
+					<i class="icon_alipay"></i><span>支付宝账号</span>
+					<input type="text" value="{{playInfo.aAcceptAliPayId}}"  />
+				</div>
+				
+				<div class=" input_box clearfix">
+					<i class="icon_jsr"></i><span>推荐人姓名</span>
+					<input type="text" value="{{playInfo.ReferenceRealName}}" />
+				</div>
+				
+				<div class="input_box clearfix">
+					<i class="icon_jsrtel"></i><span>推荐人电话</span>
+					<input type="text" value="{{playInfo.ReferenceTel}}" />
+				</div>-->
+				
+			</div>
+			
+			
+			
+			<div class="mask" ng-show="warming"></div>
+			<div class="dialog" ng-show="warming">
+				<div class="close_btn" ng-click="cacel_build()"></div>
+				<div class="tltle">警告！</div>
+				<div class="des">检查订单是否有误，检查无误请点确认。</div>
+				<div class="btn" ng-click="buildOrder()">确定</div>
+			</div>
+			
+			<!--<div class="qrdk_btn">
+				确认
+			</div>
+			
+			<div class="qrdk_btn cancel_btn" ng-if="cancel_btn">
+				产品正在运行中……
+			</div>
+			
+			<div class="qrdk_btn" ng-if="!cancel_btn">
+				确认打款
+			</div>-->
+			
+		</div>
+	
+			
+	
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>

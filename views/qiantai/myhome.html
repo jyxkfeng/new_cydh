@@ -1,0 +1,80 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:url(images/homebg.jpg) center center no-repeat; background-size: 100% auto; border: none;}
+		</style>
+		<header-directive></header-directive>
+		
+		<div style="padding-bottom: .5rem;">
+			
+	
+		<div class="my_box">
+			<div class=" clearfix">
+				<a><img src="{{imgface}}" ng-click="upfaceimg()" /></a>
+				<span>{{userInfo.Name}}<br />
+					  <p ng-click="tjlink()">点击获取注册链接<br />
+					  <i ng-show="tjshow">{{tjlinkurl}}</i>
+					  </p>
+					  
+				</span>
+				<i class="ico_go"></i>
+			</div>
+			
+		</div>
+		
+			<form enctype="multipart/form-data" method="POST" action="http://api.cydhch.com/api/UpLoadFile/UpLoadPic/" hidden="hidden">
+			<input type="hidden" name="MAX_FILE_SIZE" value="6000000">
+			<input type="hidden" name="id" value="" ng-model="uid" id="uid" />
+			<input name='imgface' type="file"  ng-model="upFile"   id="localfile" onchange="angular.element(this).scope().fileNameChanged(this)""/> 
+			<input type="submit" id="img_submit" value="Send File">
+		</form>
+		
+		
+		<div class="myorder" ng-click="myorderlist()">
+			<span>我的订单</span><i class="ico_go"></i>
+		</div>
+		
+		<!--//1 契约书 2奖券  3 我的团队-->
+		<div class="mymenus_box">
+			<div class="menuItem clearfixs" ng-click="qianbao_link()">
+				<i class="icon icon_qb" ></i><span>我的钱包</span><i class="ico_go"></i>
+			</div>
+			<div class="menuItem clearfixs" ng-click="tixianlist()">
+				<i class="icon icon_qb" ></i><span>提现记录</span><i class="ico_go"></i>
+			</div>
+			<div class="menuItem clearfixs" ng-click="mydetail('1')">
+				<i class="icon icon_myghs"></i><span>我的规划书</span><i class="ico_go"></i>
+			</div>
+			<div class="menuItem clearfixs" ng-click="mydetail('3')">
+				<i class="icon icon_myteam"></i><span>我的团队</span><i class="ico_go"></i>
+			</div>
+		</div>
+		
+		<div class="mymenus_box">
+			<div class="menuItem clearfixs" ng-click="tjlink2()">
+				<i class="icon icon_gift"></i><span>推荐有礼</span><i class="ico_go"></i>
+			</div>
+			<div class="menuItem clearfixs">
+				<i class="icon icon_jf"></i><span>我的积分</span><i class="ico_go"></i>
+			</div>
+			<div class="menuItem clearfixs" ng-click="mydetail('2')">
+				<i class="icon icon_jf"></i><span>我的抽奖券</span><i class="ico_go"></i>
+			</div>
+			
+		</div>
+		
+		<div class="qrdk_btn" ng-click="logout()" style="margin-bottom: .1rem;">
+				退出
+				</div>
+			</div>
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>

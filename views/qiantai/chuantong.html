@@ -1,0 +1,55 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+		
+		<div class="ct_game warp">
+			<ul class="clearfix">
+				<li><div class="gameitem  ico_snj" ng-click="playGame(1,1);"></div></li>
+				<li><div class="gameitem ico_ylgy" ng-click="playGame(1,2);"></div></li>
+				<li><div class="gameitem ico_dlmc" ng-click="playGame(1,3);"></div></li>
+				<li><div class="gameitem ico_jzgy" ng-click="playGame(2,1);" ng-class="{true:'',false:'nogame'}[PlayCollection>=2]"></div></li>
+				<li><div class="gameitem ico_htzj" ng-click="playGame(2,2);" ng-class="{true:'',false:'nogame'}[PlayCollection>=2]"></div></li>
+				<li><div class="gameitem ico_tdwl" ng-click="playGame(2,3);" ng-class="{true:'',false:'nogame'}[PlayCollection>=2]"></div></li>
+				<li><div class="gameitem ico_wxc" ng-click="playGame(2,4);" ng-class="{true:'',false:'nogame'}[PlayCollection>=2]"></div></li>
+				<li><div class="gameitem ico_slmsh" ng-click="playGame(3,1);" ng-class="{true:'',false:'nogame'}[PlayCollection>=3]"></div></li>
+				<li><div class="gameitem ico_blm" ng-click="playGame(3,2);" ng-class="{true:'',false:'nogame'}[PlayCollection>=3]"></div></li>
+				<li><div class="gameitem ico_bhyt" ng-click="playGame(3,3);" ng-class="{true:'',false:'nogame'}[PlayCollection>=3]"></div></li>
+				<li><div class="gameitem ico_wdlyg" ng-click="playGame(3,4);" ng-class="{true:'',false:'nogame'}[PlayCollection>=3]"></div></li>
+				<li><div class="gameitem ico_smd " ng-click="playGame(3,5);" ng-class="{true:'',false:'nogame'}[PlayCollection>=3]"></div></li>
+			</ul>
+			
+		</div>
+		
+		<div class="mask" ng-show={{gzdialog}}></div>
+		<div class="gzdialog" ng-show={{gzdialog}}>
+				<div class="gzbg">
+					<div class="title">
+						您暂时无权利玩本关游戏，<br />
+						需完成前面的游戏任务，<br />
+						方可进行本游戏。
+					</div>
+					<div class="des">
+						<p>本游戏规则如下：</p>
+						<p><span>投资金额 </span> <span>¥2000</span></p>
+						<p><span>收获 </span> <span>¥2400</span></p>
+						<p><span>需规划书</span>  <span>x2</span></p>
+					</div>
+					<div class="btn">返回</div>
+				</div>
+			</div>
+	
+			
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>

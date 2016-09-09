@@ -1,0 +1,69 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+			
+			<div class="qianbaobox" ng-if="type==1">
+				<div class="title" >
+					契约书户（张）
+				</div>
+				<div class="money">
+					{{userInfo.Charter}}
+				</div>
+			</div>
+			
+			<div class="qianbaobox" ng-if="type==2">
+				<div class="title" >
+					抽奖券
+				</div>
+				<div class="money">
+					{{userInfo.SweepsTakes}}
+				</div>
+			</div>
+			
+			<div class="qianbaobox" style="padding: .25rem .03rem;" ng-if="type==3">
+				<ul class="tbth clearfix"><li>ID</li><li></li><li>姓名</li><li>游戏次数</li></ul>
+				<ul class="tbtd clearfix" ng-click="showmyteam($index)" ng-repeat="item in TeamInfo._MyTeams">
+					
+					<li>{{item.UId}}</li>
+					<li ng-if="item.UFace!=''"><img src="http://api.cydhch.com/{{item.UFace}}"  /></li>
+					<li ng-if="item.UFace==''"><img src="images/user_bg.jpg"  /></li>
+					<li>{{item.Name}}</li>
+					<li>{{item._Play.length}} </li>
+					<li>查看</li>
+					<div class="teamPlay" ng-show="showteamnum==$index">
+						<ol class="clearfix"><li>订单号</li><li>游戏金额</li><li>完成时间</li></ol>
+						<ol class="clearfix" ng-repeat="y in item._Play" >
+							<li>{{y.SchemeId}}</li>
+							<li>{{y.Money}}</li>
+							<li>{{y.EndTime | date : 'yyyy-MM-dd'}}</li>
+							
+						</ol>
+					</div>
+				</ul>
+			</div>
+			
+		
+		<!--<div class="mymenus_box">
+			<div class="menuItem clearfixs" ng-click="gotixian()">
+				<i class="icon icon_qb"></i><span>提现</span><i class="ico_go"></i>
+			</div>
+			<div class="menuItem clearfixs" ng-click="tixianlist()">
+				<i class="icon icon_qb"></i><span>我的提现</span><i class="ico_go"></i>
+			</div>
+			
+		</div>-->
+	
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>

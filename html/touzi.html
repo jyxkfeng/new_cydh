@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="pragma" content="no-cache">
+	    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+	    <meta http-equiv="expires" content="0">
+	    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<link rel="stylesheet" href="../public/css/layout.css" />
+		<link rel="stylesheet" href="../css/index.css" />
+		<link rel="stylesheet" href="../public/scripts/lib/swiper/swiper-3.3.1.min.css" />
+		<title>投资</title>
+		<link rel="stylesheet" href="../public/css/layout.css" />
+		<link rel="stylesheet" href="../css/index.css" />
+	</head>
+	<body class="touzi_bg">
+		<div class="warp">
+			<div class="timer_box">
+				<i class="icon_clock"></i>剩余时间：12:33:00
+			</div>
+			<div class="touzi_box">
+				<div class="input_box clearfix">
+				<i class="icon_touzi"></i><span>投资金额</span>
+				<input type="text" value="¥500"  />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_sh"></i><span>收获</span>
+				<input type="text" value="¥700"  />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_ghs"></i><span>理财规划书</span>
+				<input type="text" value="x1" placeholder="" />
+				</div>
+				
+				<div class="input_box clearfix">
+				<i class="icon_username"></i><span>收款人姓名</span>
+				<input type="text" value="" placeholder="请输入收款人姓名" />
+				</div>
+				<div class="input_box clearfix">
+					<i class="icon_tel"></i><span>电话</span>
+					<input value=""  type="text" placeholder="请输入电话"  />
+				</div>
+				<div class="input_box clearfix">
+					<i class="icon_card"></i><span>银行卡号</span>
+					<input type="text" value="" placeholder="请输入银行卡号" />
+				</div>
+				
+				<div class="input_box clearfix">
+					<i class="icon_alipay"></i><span>支付宝账号</span>
+					<input type="text" value="" placeholder="请输入支付宝账号"  />
+				</div>
+				
+				<div class=" input_box clearfix">
+					<i class="icon_jsr"></i><span>推荐人姓名</span>
+					<input type="text" value="" placeholder="请输入推荐人姓名"  />
+				</div>
+				
+				<div class="input_box clearfix">
+					<i class="icon_jsrtel"></i><span>推荐人电话</span>
+					<input type="text" value="" placeholder="请输入推荐人电话" />
+				</div>
+				
+			</div>
+			
+			<div class="updata_contant">
+				<div class="upload_btn">
+					<!--<img src="../images/banner.png"  />-->
+				</div>
+			</div>
+			
+			<div class="mask" ng-show="newGame"></div>
+			<div class="dialog" ng-show="newGame">
+				<div class="close_btn"></div>
+				<div class="tltle">警告！</div>
+				<div class="des">检查订单是否有误，检查无误请点确认。</div>
+				<div class="btn" ng-click="buildOrder()">确定</div>
+			</div>
+			
+			<!--<div class="qrdk_btn">
+				确认
+			</div>
+			
+			<div class="qrdk_btn cancel_btn">
+				产品正在运行中……
+			</div>
+			
+			<div class="qrdk_btn">
+				确认打款
+			</div>-->
+			
+		</div>
+	</body>
+</html>

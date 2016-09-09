@@ -1,0 +1,53 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background: none; border: none;}
+		</style>
+		<header-directive></header-directive>
+		<div class="g-body">
+			<form name="registerForm">
+					<div class="login_box register_box">					
+						<div class="input_text">
+							<span class="ico ico_username"></span>
+							<input name="realname" value="" placeholder="请输入姓名"  ng-model='params.realname'  required   ng-required="true" ng-pattern="/^[\u4E00-\u9FA5]{2,20}$/" pattern="/^[\u4E00-\u9FA5]{2,20}$/"/>						
+						</div>
+						<div class="input_text">
+							<span class="ico ico_card"></span>
+							<input  name="cardid" value="" type="" placeholder="请输入银行卡号"  ng-model='params.cardid'  required   ng-required="true"  ng-pattern="/^([0-9]{16}|[0-9]{19})$/"  pattern="/^([0-9]{16}|[0-9]{19})$/"  />
+						</div>
+						<div class="input_text">
+							<span class="ico ico_card"></span>
+							<input  name="cardtype" value="" type="" placeholder="请输入银行名"  ng-model='params.cardtype' required   ng-required="true" ng-pattern="/^[\u4E00-\u9FA5]{4,10}$/"  pattern="/^[\u4E00-\u9FA5]{4,10}$/"  />
+						</div>
+						<div class="input_text">
+							<span class="ico ico_card"></span>
+							<input  name="cardaddress" value="" type="" placeholder="请输入开户行"  ng-model='params.cardaddress' required   ng-required="true" ng-pattern="/^[\u4E00-\u9FA5]{4,20}$/" pattern="/^[\u4E00-\u9FA5]{4,20}$/"  />
+						</div>
+						
+						<div class="input_text">
+							<span class="ico ico_alipay"></span>
+							<input  name="alipayid" value="" type="" placeholder="请输入支付宝账号"  ng-model='params.alipayid' required   ng-required="true"   />
+						</div>
+						
+						
+						
+						<input class="btn qrdk_btn" type="submit" value="绑定"   ng-disabled="isbindcard" ng-click="bindCard()"></input>
+						<p >
+							<a class="fl">绑定即代表同意<span class="c-red">真实性协议</span>，注册内容真实可靠，如有虚假，需承担封号以及相关法律责任</a>
+							
+						</p>
+						
+					</div>
+			</form>
+		</div>
+
+	</body>
+
+</html>

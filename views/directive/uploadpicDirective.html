@@ -1,0 +1,21 @@
+
+<!-- saved from url=(0055)http://1.m.jdd.com/views/directive/headerDirective.html -->
+<html><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+	<body>
+
+	<form enctype="multipart/form-data" method="POST" action="http://api.cydhch.com/api/UpLoadFile/UpLoadPic/" hidden="hidden">
+			<input type="hidden" name="MAX_FILE_SIZE" value="6000000">
+			<input type="hidden" name="id" value="" ng-model="schemeid" id="schemeid" />
+			<input name='imgpay' type="file"  ng-model="upFile"   id="localfile" onchange="angular.element(this).scope().fileNameChanged(this)""/> 
+			<input type="submit" id="img_submit" value="Send File">
+		</form>
+		<div class="upload_btn" ng-click="UpLoadPic()">
+			
+				<img src="{{locpic}}" id="img_src"  />
+			
+		</div>
+		<div class="qrdk_btn" ng-class="{true:'',false:'cancel_btn'}[ablebtn]" ng-disabled="{{ablebtn}}" ng-click="PlayPay()">
+					确认打款
+					</div>
+</body></html>

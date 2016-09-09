@@ -1,0 +1,37 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+			
+			<div class="qianbaobox">
+			<div class="title">
+				余额账户（元）
+			</div>
+			<div class="money">
+				{{userInfo.Money| currency:'￥'}}
+			</div>
+		</div>
+		
+		<div class="mymenus_box">
+			<div class="menuItem clearfixs" ng-click="gotixian()">
+				<i class="icon icon_qb"></i><span>提现</span><i class="ico_go"></i>
+			</div>
+			<div class="menuItem clearfixs" ng-click="tixianlist()">
+				<i class="icon icon_qb"></i><span>我的提现</span><i class="ico_go"></i>
+			</div>
+			
+		</div>
+	
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>

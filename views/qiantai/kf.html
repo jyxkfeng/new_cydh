@@ -1,0 +1,56 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+			
+			<div class="kf_warp">
+			<div class="title">
+				联系方式(选填)
+			</div>
+			<div class="kf_box">
+				<div class="input_box">
+				<i class="icon_jsrtel"></i>
+				<input value="" name="tel" placeholder="手机号码" ng-model="tel" />
+				</div>
+				<div class="input_box">
+					<i class="icon_card"></i>
+					<input value="" name="username" placeholder="用户名" ng-model="username" />
+				</div>
+			</div>
+			<div class="title">
+				问题类别
+			</div>
+			<div class="lblist">
+				<ul class="clearfix">
+					<li ng-class="{true:'active',false:''}[type==1]" class="active" ng-click="typeSelect(1)">账户问题</li>
+					<li ng-class="{true:'active',false:''}[type==2]"  ng-click="typeSelect(2)">提现问题</li>
+					<li ng-class="{true:'active',false:''}[type==3]"  ng-click="typeSelect(3)">推荐问题</li>
+					<li ng-class="{true:'active',false:''}[type==4]"  ng-click="typeSelect(4)">系统问题</li>
+					<li ng-class="{true:'active',false:''}[type==5]"  ng-click="typeSelect(5)">其他</li>
+					
+				</ul>
+			</div>
+			<div class="title">
+				您的问题
+			</div>
+			<textarea class="kf_description" placeholder="这里写下您遇到的问题" ng-model="MyQuestion"></textarea>
+			
+			<div class="qrdk_btn" ng-click="sbQuestion()">
+				提交
+			</div>
+		</div>
+	
+	
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+			
+		<div class="orderlist">
+					<div class="item" ng-repeat="item in userInfo.Data" ng-click="tixiandetail(item.FundId)">
+						<div class="des">打款人：{{item.AcceptRealName}}
+							<span class="stuas" ng-if='item.Status==0'>待收款 &gt;</span>
+							<span class="stuas" ng-if='item.Status==50'>待确认&gt;</span>
+							<span class="stuas" ng-if='item.Status==100'>已收款  &gt;</span>
+						</div>
+						<div class="des">电话：{{item.AcceptTel}}</div>
+						<div class="des">创建时间：{{item.CreateTime}}</div>
+					</div>
+					
+					
+				</div>
+	
+	
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>
+
+
+
+
+

@@ -1,0 +1,44 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+			
+			<div class="order_menus">
+				<ul class="clearfix">
+					<li ng-click="querylink('')"><a class="active" >全部</a></li>
+					<li ng-click="querylink('待打款')"><a>待打款</a></li>
+					<li ng-click="querylink('已打款')"><a>已打款</a></li>
+					<li ng-click="querylink('待收款')"><a>待收款</a></li>
+					<li ng-click="querylink('已收款')"><a>已收款</a></li>
+				</ul>
+			</div>
+			<input type="text" hidden="hidden" value="" ng-model="query" />
+			<div class="orderlist">
+				
+				<div class="item" ng-repeat="item in userInfo.Data | filter:query | orderBy:order" ng-click="opendetail(item.OrderType,item.PlayCollection,item.PlayId,item.PlayStage,item.OrderId)">
+					<div class="des">收款人：{{item.AskName}} <span class="stuas">{{item.OrderSpeed_CHS}}  &gt;</span></div>
+					<div class="des">电话：{{item.AskTel}}</div>
+					<div class="des">到期时间：{{item.EndTime}}</div>
+				</div>
+				
+			</div>
+	
+	
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>
+
+
+
+
+
