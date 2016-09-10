@@ -13,9 +13,8 @@
 			<div class="banner">
 				<div class="swiper-container">
 				  <div class="swiper-wrapper">
-				    <div class="swiper-slide"><a style="background: url(images/banner.png) center center no-repeat; background-size: auto 1.35rem; display: block;"></a></div>
-				    <div class="swiper-slide"><a style="background: url(images/banner.png) center center no-repeat; background-size: auto 1.35rem; display: block;"></a></div>
-				    <div class="swiper-slide"><a style="background: url(images/banner.png) center center no-repeat; background-size: auto 1.35rem; display: block;"></a></div>
+				    <div class="swiper-slide" ng-repeat=" item in banner"><a style="background: url({{host}}{{item.PicURL}}) center center no-repeat; background-size: auto 1.35rem; display: block;"></a></div>
+			
 				  </div>
 				   <div class="swiper-pagination"></div>
 				</div>
@@ -28,7 +27,7 @@
 					<li><a><img src="images/ico_shop.png" /><span>商城</span></a></li>
 					<li><a><img src="images/ico_jf.png" /><span>积分兑换</span></a></li>
 					<li><a><img src="images/ico_qd.png" /><span>签到</span></a></li>
-					<li><a><img src="images/ico_qd.png" /><span>慈善扶助</span></a></li>
+					<li><a><img src="images/fupibg.png" /><span>慈善扶助</span></a></li>
 					
 				</ul>
 				

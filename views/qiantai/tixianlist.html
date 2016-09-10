@@ -15,9 +15,10 @@
 		<div class="orderlist">
 					<div class="item" ng-repeat="item in userInfo.Data" ng-click="tixiandetail(item.FundId)">
 						<div class="des">打款人：{{item.AcceptRealName}}
-							<span class="stuas" ng-if='item.Status==0'>待收款 &gt;</span>
-							<span class="stuas" ng-if='item.Status==50'>待确认&gt;</span>
-							<span class="stuas" ng-if='item.Status==100'>已收款  &gt;</span>
+							<span class="stuas" ng-if='item.Status==0'>待匹配 &gt;</span>
+							<span class="stuas" ng-if='item.Status==50'>待付款&gt;</span>
+							<span class="stuas" ng-if='item.Status==70'>去收款&gt;</span>
+							<span class="stuas" ng-if='item.Status==100'>已完成  &gt;</span>
 						</div>
 						<div class="des">电话：{{item.AcceptTel}}</div>
 						<div class="des">创建时间：{{item.CreateTime}}</div>

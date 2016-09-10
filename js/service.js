@@ -2,6 +2,7 @@
 	angular.module('app')
 	.service('API', ['$http','$cookies','$rootScope','userInfo',function($http,$cookies,$rootScope,userInfo){
 			var hostName = 'http://api.cydhch.com';
+			$rootScope.host='http://api.cydhch.com';
 		
 		var ucInt = function(host,params){
 

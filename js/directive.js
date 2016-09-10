@@ -178,7 +178,7 @@
 								//付款
 							$scope.PlayPay = function() {
 								var params = {
-									schemeid: playInfo.get()[0].SchemeId,
+									schemeid: playInfo.get().SchemeId,
 									pic:$scope.pic
 								}
 								//确认无误,付款订单

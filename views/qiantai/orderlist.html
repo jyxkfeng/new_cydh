@@ -14,11 +14,11 @@
 			
 			<div class="order_menus">
 				<ul class="clearfix">
-					<li ng-click="querylink('')"><a class="active" >全部</a></li>
-					<li ng-click="querylink('待打款')"><a>待打款</a></li>
-					<li ng-click="querylink('已打款')"><a>已打款</a></li>
-					<li ng-click="querylink('待收款')"><a>待收款</a></li>
-					<li ng-click="querylink('已收款')"><a>已收款</a></li>
+					<li ng-click="querylink('','0')"><a ng-class="{true:'active',false:''}[query2==0]" >全部</a></li>
+					<li ng-click="querylink('待打款','1')"><a ng-class="{true:'active',false:''}[query2==1]" >待打款</a></li>
+					<li ng-click="querylink('已打款','2')"><a ng-class="{true:'active',false:''}[query2==2]" >已打款</a></li>
+					<li ng-click="querylink('待收款','3')"><a ng-class="{true:'active',false:''}[query2==3]" >待收款</a></li>
+					<li ng-click="querylink('已收款','4')"><a ng-class="{true:'active',false:''}[query2==4]" >已收款</a></li>
 				</ul>
 			</div>
 			<input type="text" hidden="hidden" value="" ng-model="query" />

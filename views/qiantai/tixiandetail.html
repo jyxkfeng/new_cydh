@@ -11,7 +11,8 @@
 			#dvHeader{ background:none; border: none;}
 		</style>
 		<header-directive></header-directive>
-			<div class="txbox">
+		
+			<div class="txbox" ng-if="userInfo.Data[0].Status==0">
 			<div class="title">
 				提现金额（元）
 				
@@ -24,10 +25,52 @@
 			
 		</div>
 		
+		<div class="" ng-if="userInfo.Data[0].Status==50||userInfo.Data[0].Status==70 ||userInfo.Data[0].Status==100 ">
+			<div class="txbox">
+			<div class="title">
+				提现金额（元）
+				
+			</div>
+			<div class="money_box">
+				<i class="icon_rmb"></i><input type="text" value="{{userInfo.Data[0].Money}}" />
+			</div>
+			<div class="input_box clearfix">
+				<i class="icon_username"></i><span>打款人姓名</span>
+				<input type="text" value="{{userInfo.Data[0].AskRealName}}" />
+				</div>
+			<div class="input_box clearfix">
+					<i class="icon_tel"></i><span>打款人电话</span>
+					<input value="{{userInfo.Data[0].AskTel}}"  type="text"  />
+			</div>	
+			<div class=" input_box clearfix">
+					<i class="icon_jsr"></i><span>推荐人姓名</span>
+					<input type="text" value="{{userInfo.Data[0].ReferenceRealName}}"   />
+			</div>
+			
+			<div class="input_box clearfix">
+					<i class="icon_jsrtel"></i><span>推荐人电话</span>
+					<input type="text" value="{{userInfo.Data[0].ReferenceTel}}" />
+				</div>
+			
+			<div class="updata_contant" ng-if="userInfo.Data[0].Status==70">
+				<div class="upload_btn">
+					<a href="{{host}}{{userInfo.Data[0].PicUrl}}" target="_blank"><img src="{{host}}{{userInfo.Data[0].PicUrl}}"  /></a>
+				</div>
+			</div>
+			
+			
+		</div>
+		</div>
+		
+		
+		
 		<div class="qrdk_btn cancel_btn" ng-if="userInfo.Data[0].Status==0">
 			待匹配
 		</div>
-		<div class="qrdk_btn" ng-if="userInfo.Data[0].Status==50" ng-click="querySK(userInfo.UId,userInfo.Data[0].FundId)">
+		<div class="qrdk_btn cancel_btn" ng-if="userInfo.Data[0].Status==50">
+			等待对方打款
+		</div>
+		<div class="qrdk_btn" ng-if="userInfo.Data[0].Status==70" ng-click="querySK(userInfo.UId,userInfo.Data[0].FundId)">
 			确认收款
 		</div>
 		<div class="qrdk_btn cancel_btn" ng-if="userInfo.Data[0].Status==100">

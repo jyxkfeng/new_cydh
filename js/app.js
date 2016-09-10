@@ -97,11 +97,23 @@
                 title:'自由模式',
                 controller:'ziyouCtrl'
             })
+            .state('newtouzi',{
+                url:'/newtouzi/:Playid?PlayCollection?PlayStage',
+                templateUrl:'views/qiantai/newtouzi.html',
+                title:'新建游戏',
+                controller:'newtouziCtrl'
+            })
             .state('touzi',{
-                url:'/touzi/:Playid?PlayCollection?PlayStage',
+                url:'/touzi/:Playid?PlayCollection?PlayStage?SchemeId',
                 templateUrl:'views/qiantai/touzi.html',
                 title:'投资',
                 controller:'touziCtrl'
+            })
+             .state('touzilist',{
+                url:'/touzilist/:Playid?PlayCollection?PlayStage?SchemeId',
+                templateUrl:'views/qiantai/touzilist.html',
+                title:'打款列表',
+                controller:'touzilistCtrl'
             })
             .state('tixian',{
                 url:'/tixian',

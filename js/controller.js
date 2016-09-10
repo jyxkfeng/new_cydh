@@ -1,7 +1,7 @@
 (function(window, angular) {
 	angular.module('app')
 		//首页
-		.controller('indexCtrl', ['$scope','$state','$rootScope', 'API', 'lyer', 'userInfo', 'countDown', 'isBindCard', function($scope,$state, $rootScope, API, lyer, userInfo, countDown, isBindCard) {
+		.controller('indexCtrl', ['$scope','$state','$rootScope','$cookieStore', 'API', 'lyer', 'userInfo', 'countDown', 'isBindCard', function($scope,$state,$rootScope,$cookieStore, API, lyer, userInfo, countDown, isBindCard) {
 			$rootScope.body_class = "index_bg";
 			console.log($rootScope.isLogin);
 			$scope.footerShow = true;
@@ -49,13 +49,30 @@
 				return false;
 			}
 			//判断用户是否绑定
-			isBindCard();
-			if(!$rootScope.IsBindBank) {
-				console.log("去绑定银行卡");
-				$state.go('bankcard');
+			API.qtInt('/api/yqsuser/Refresh/',{uid:userInfo.get().UId})
+									.success(function(rt) {
+										rt = angular.fromJson(rt)
+										if(rt.Code == 0) {
+											$scope.userInfo=angular.extend({},rt.Data);
+											$cookieStore.remove('userInfo');
+											userInfo.set($scope.userInfo);
+											console.log(rt);
+											  if(!userInfo.get().IsBindBank){
+											  	console.log("去绑定银行卡");
+												$state.go('bankcard');
+											  }
+												
+											
+											
+											
+										} else {
+											lyer.msg(rt.Msg);
+											return false;
+										}
+									});
 			
-				return false;
-			}
+		
+			
 			// console.log(API);
 			var bannerParams = {
 					action: 2005,
@@ -63,21 +80,25 @@
 						btype: 0
 					})
 				}
+			
 				//首页轮播图
-				//			API.ucInt(bannerParams)
-				//				.success(function(rt){
-				//					// console.log(rt);
-				//					if(rt.Code == 0){
-				//						$scope.banner = rt.Data.list;
-				//
-				//						setTimeout(function(){
-				//							var mySwiper = new Swiper('.swiper-container', {
-				//								autoplay: 3000,//可选选项，自动滑动
-				//								pagination : '.swiper-pagination',
-				//							})
-				//						},50);
-				//					}
-				//				});
+							API.qtInt('/api/yqsAssistant/Protal/',{})
+								.success(function(rt){
+									
+									rt = angular.fromJson(rt)
+									// console.log(rt);
+									if(rt.Code == 0){
+										$scope.banner = rt.Data;
+										$scope.host=$rootScope.host;
+				
+										setTimeout(function(){
+											var mySwiper = new Swiper('.swiper-container', {
+												autoplay: 3000,//可选选项，自动滑动
+												pagination : '.swiper-pagination',
+											})
+										},50);
+									}
+								});
 
 		}])
 		//注册
@@ -137,7 +158,7 @@
 			$rootScope.body_class = "login_bg";
 			$scope.titleShow = true;
 			console.log('login');
-			$scope.params = {};
+			var params = {};
 			$scope.login = function() {
 
 				if($scope.loginForm.name.$error.required) {
@@ -147,9 +168,9 @@
 					lyer.msg('请输入正确的手机号码');
 					return false;
 				}
-
-				$scope.params.pwd = md5.createHash($scope.params.pwd + 'Q56GtyNkop97H334TtyturfgErvvv98r' || '');
-				var params = angular.extend({}, $scope.params);
+				params.name=$scope.params.name;
+				params.pwd = md5.createHash($scope.params.pwd + 'Q56GtyNkop97H334TtyturfgErvvv98r' || '');
+				//var params = angular.extend({}, params);
 				//提交表单登陆 ;
 				API.qtInt('/api/yqsuser/Login/', params)
 					.success(function(rt) {
@@ -174,6 +195,7 @@
 			$scope.titleShow = true;
 			$scope.params = {};
 			$scope.isbindcard = false;
+		
 			$scope.bindCard = function() {
 
 				console.log('bindCard');
@@ -263,10 +285,10 @@
 		
 		$scope.tjlink=function(){
 			$scope.tjshow=!$scope.tjshow;
-			$scope.tjlinkurl='cydhch.com/index.html#/register/'+$scope.userInfo.Name+'?ReferenceTel='
+			$scope.tjlinkurl='cydhch.com/index.html#/register/'+$scope.userInfo.Name
 		}
 		$scope.tjlink2=function(){
-			lyer.msg('cydhch.com/index.html#/register/'+$scope.userInfo.Name+'?ReferenceTel=');
+			lyer.msg('cydhch.com/index.html#/register/'+$scope.userInfo.Name);
 			}
 		$scope.qianbao_link=function(){
 			$state.go('qianbao');
@@ -405,7 +427,13 @@
 					.success(function(rt) {
 						rt = angular.fromJson(rt)
 						if(rt.Code == 0) {
-							lyer.msg(rt.Msg);
+							lyer.msg(rt.Msg,function(){
+									
+							});
+							$scope.tel='';
+									$scope.username='';
+									$scope.type='1';
+									$scope.MyQuestion='';	
 						} else {
 							lyer.msg(rt.Msg);
 							return false;
@@ -440,14 +468,14 @@
 							userInfo.set($scope.userInfo);
 							console.log(userInfo.get())
 							$scope.open=1; //层级 显示
-							$scope.PlayCollection=userInfo.get().PlayCollection;
-							$scope.PlayStage=userInfo.get().PlayStage;
-							$scope.PlayStatus=userInfo.get().PlayStatus;
+							$scope.PlayCollection=$scope.userInfo.PlayCollection;
+							$scope.PlayStage=$scope.userInfo.PlayStage;
+							$scope.PlayStatus=$scope.userInfo.PlayStatus;
 							if($scope.PlayStatus==100){
 								if($scope.PlayCollection==1&&$scope.PlayStage==3){
 									$scope.open=2;
 								}
-								else if($scope.PlayCollection==2){
+								else if($scope.PlayCollection==2||$scope.PlayCollection==3){
 									$scope.open=3
 								}
 								else if($scope.PlayCollection==1&&$scope.PlayStage<3){
@@ -457,7 +485,8 @@
 							}
 							else{
 								$scope.open=$scope.PlayCollection; 
-							}
+								}
+						
 						}
 						
 						else {
@@ -471,7 +500,7 @@
 						
 						//playcollection=0,playstage=0或者playcollection=1,playstage=1，playstatus<100,或者playcollection=3，playstatus=100
 						if(($scope.PlayCollection==0&&$scope.PlayStage==0)||($scope.PlayCollection==1&&$scope.PlayStage==1&&$scope.PlayStatus<100)||($scope.PlayCollection==3&&$scope.PlayStatus==100)){
-							$state.go('touzi',{
+							$state.go('touzilist',{
 								Playid:1,
 								PlayCollection:1,
 								PlayStage:1
@@ -486,7 +515,7 @@
 						//playcollection=1,playstage=1，playstatus=100,
 						//或者playcollection=1,playstage=2,playstatus<100
 						if(($scope.PlayCollection==1&&$scope.PlayStage==1&&$scope.PlayStatus==100)||($scope.PlayCollection==1&&$scope.PlayStage==2&&$scope.PlayStatus<100)){
-							$state.go('touzi',{
+							$state.go('touzilist',{
 								Playid:1,
 								PlayCollection:1,
 								PlayStage:2
@@ -501,8 +530,8 @@
 						
 						//playcollection=1,playstage=2，playstatus=100,或者playcollection=1,playstage=3,playstatus<100都可以玩
 
-						if(($scope.PlayCollection==1&&$scope.PlayStage==2&&$scope.PlayStatus==100)||($scope.PlayCollection==1&&$scope.PlayStatus==3&&$scope.PlayStatus<100)){
-							$state.go('touzi',{
+						if(($scope.PlayCollection==1&&$scope.PlayStage==2&&$scope.PlayStatus==100)||($scope.PlayCollection==1&&$scope.PlayStage==3&&$scope.PlayStatus<100)){
+							$state.go('touzilist',{
 								Playid:1,
 								PlayCollection:1,
 								PlayStage:3
@@ -516,8 +545,8 @@
 					if(PlayCollection==2){
 						
 						//playcollection=1,playstage=3，playstatus=100,或者playcollection=2，playstatus<100
-						if(($scope.PlayCollection==1&&$scope.PlayStage==3&&$scope.PlayStatus==100)||($scope.PlayCollection==2&&$scope.PlayStatus<100)){
-							$state.go('touzi',{
+						if(($scope.PlayCollection==1&&$scope.PlayStage==3&&$scope.PlayStatus==100)||($scope.PlayCollection==2)){
+							$state.go('touzilist',{
 								Playid:1,
 								PlayCollection:2,
 								PlayStage:PlayStage
@@ -528,12 +557,10 @@
 						}
 					}
 					if(PlayCollection==3){
-						$scope.PlayStage
-						$scope.PlayCollection
-						$scope.PlayStatus
+			
 						//playcollection=2,playstatus=100,或者playcollection=3，playstatus<100
-						if(($scope.PlayCollection==2&&$scope.PlayStatus==100)||($scope.PlayCollection==3&&$scope.PlayStatus<100)){
-							$state.go('touzi',{
+						if(($scope.PlayCollection==2&&$scope.PlayStatus==100)||($scope.PlayCollection==3)){
+							$state.go('touzilist',{
 								Playid:1,
 								PlayCollection:3,
 								PlayStage:PlayStage
@@ -554,8 +581,10 @@
 		$rootScope.body_class = "ct_game_bg";
 		$scope.footerShow = true;
 		$scope.titleShow = true;
+		
+		
 		$scope.playGame = function(PlayCollection, PlayStage) {
-			$state.go('touzi',{
+			$state.go('touzilist',{
 						Playid:2,
 						PlayCollection:PlayCollection,
 						PlayStage:PlayStage
@@ -588,7 +617,12 @@
 						uid:$scope.uid,
 						money:$scope.txmoney
 					}
-			if(!!$scope.txmoney&&$scope.txmoney<$scope.userInfo.Money){
+				
+			if((!!$scope.txmoney)&&($scope.txmoney<=$scope.userInfo.Money)){
+				if($scope.txmoney%100!=0){
+					lyer.msg('必须是100的整数!')
+					return false;
+				}
 				console.log('true');
 					API.qtInt('/api/yqsfund/fund/',params)
 									.success(function(rt) {
@@ -633,7 +667,10 @@
 										rt = angular.fromJson(rt)
 										if(rt.Code == 0) {
 											$scope.userInfo=angular.extend({},rt.Data);
-											
+											if(rt.Data.Data.length==0){
+												lyer.msg('暂时还没有提现记录!');
+												
+											}
 											
 											console.log(rt);
 										} else {
@@ -671,6 +708,7 @@
 										rt = angular.fromJson(rt)
 										if(rt.Code == 0) {
 											$scope.userInfo=angular.extend({},rt.Data);
+											$scope.host=$rootScope.host;
 											
 											console.log(rt);
 										} else {
@@ -705,6 +743,89 @@
 		
 	}])
 	
+	//投资前判断
+	
+	.controller('touzilistCtrl', ['$scope', '$rootScope', 'API', 'userInfo','playInfo', '$state', 'lyer', '$stateParams','$cookieStore',function($scope, $rootScope, API, userInfo, playInfo,$state, lyer, $stateParams,$cookieStore) {
+		// unlogin($scope);
+		
+		if(!$rootScope.isLogin) {
+			$state.go('login');
+			console.log($rootScope.isLogin);
+			return false;
+		} 
+		
+		$rootScope.body_class = "order_bg";
+		$scope.footerShow = true;
+		$scope.titleShow = true;
+		$scope.warming=false;
+		$scope.upload_PicUrl=false;
+		$scope.cancel_btn=false;
+		$scope.PlayCollection = $stateParams.PlayCollection;
+		$scope.PlayStage = $stateParams.PlayStage;
+		$scope.Playid=$stateParams.Playid;
+		console.log('$scope.PlayCollection'+$scope.PlayCollection);
+		console.log('$scope.PlayStage'+$scope.PlayStage);
+		
+		//进入游戏查询游戏进度
+			var params = {
+				'uid': userInfo.get().UId,
+				'playid':$scope.Playid,
+				'playcollection': $scope.PlayCollection,
+				'playstage': $scope.PlayStage
+			};
+		API.qtInt('/api/yqsPlay/PlaySpeed/', params)
+			.success(function(rt) {
+				rt = angular.fromJson(rt);				
+				if(rt.Code == 0&&(rt.Data.Data.length>0)){
+					$scope.userInfo=angular.extend({},rt.Data);
+					$cookieStore.remove('userInfo');
+					userInfo.set($scope.userInfo);
+					$scope.playInfo=$scope.userInfo.Data[0];
+					$cookieStore.remove('playInfo');
+					playInfo.set($scope.playInfo);
+					console.log($scope.playInfo);
+					$scope.status=$scope.playInfo.PlayStatus;
+					$state.go('touzilist');	
+				} 
+				else {
+					//未查询到游戏进度,新建游戏
+					$scope.status=-1;
+					$scope.playInfo=angular.extend({},rt.Data);
+					$cookieStore.remove('playInfo');
+					playInfo.set($scope.playInfo);
+					console.log($scope.playInfo);
+					$state.go('newtouzi',{
+								Playid:$scope.Playid,
+								PlayCollection:$scope.PlayCollection,
+								PlayStage:$scope.PlayStage
+						})	
+					}				
+			});
+			$scope.opendetail=function(OrderType,PlayCollection,PlayId,PlayStage,SchemeId){
+			console.log(OrderType);
+			console.log(PlayCollection);
+			console.log(PlayId);
+			console.log(PlayStage);
+			console.log(SchemeId);
+			if(OrderType==3){
+				$state.go('tixiandetail',{
+				fundId:OrderId
+				});
+			}
+			else{
+				$state.go('touzi',{
+						Playid:PlayId,
+						PlayCollection:PlayCollection,
+						PlayStage:PlayStage,
+						SchemeId:SchemeId
+					})
+			}
+		}
+			
+			
+	}])
+	
+	
 	//投资
 	.controller('touziCtrl', ['$scope', '$rootScope', 'API', 'userInfo','playInfo', '$state', 'lyer', '$stateParams','$cookieStore',function($scope, $rootScope, API, userInfo, playInfo,$state, lyer, $stateParams,$cookieStore) {
 		// unlogin($scope);
@@ -726,20 +847,20 @@
 		$scope.PlayCollection = $stateParams.PlayCollection;
 		$scope.PlayStage = $stateParams.PlayStage;
 		$scope.Playid=$stateParams.Playid;
+		$scope.SchemeId=$stateParams.SchemeId
 		console.log('$scope.PlayCollection'+$scope.PlayCollection);
 		console.log('$scope.PlayStage'+$scope.PlayStage);
 		
 		//进入游戏查询游戏进度
 			var params = {
-				'uid': userInfo.get().UId,
-				'playid':$scope.Playid,
-				'playcollection': $scope.PlayCollection,
-				'playstage': $scope.PlayStage
+				
+				SchemeId: $scope.SchemeId
+				
 			};
 		API.qtInt('/api/yqsPlay/PlaySpeed/', params)
 			.success(function(rt) {
-				rt = angular.fromJson(rt)
-				if(rt.Code == 0&&rt.Data.Data.length>0) {
+				rt = angular.fromJson(rt);				
+				if(rt.Code == 0) {
 					//查询得到游戏进度
 					
 					$scope.userInfo=angular.extend({},rt.Data);
@@ -747,39 +868,47 @@
 					userInfo.set($scope.userInfo);
 					$scope.playInfo=$scope.userInfo.Data[0];
 					$cookieStore.remove('playInfo');
-					playInfo.set(rt.Data.Data);
+					playInfo.set($scope.playInfo);
 					console.log($scope.playInfo);
 					$scope.status=$scope.playInfo.PlayStatus;
 					setInterval(function(){
 						var now = new Date(); 
-						$scope.playInfo.StartTime=$scope.playInfo.StartTime.replace(/\-/g,'/');
-						var endDate = new Date($scope.playInfo.StartTime); 
-						var leftTime=endDate.getTime()+1000*60*60*24-now.getTime(); 
-						var leftsecond = parseInt(leftTime/1000); 
-						if(leftTime<0){
-							$scope.EndTime="已超时";
-						}
-						else{
-						//var day1=parseInt(leftsecond/(24*60*60*6)); 
-						var day1=Math.floor(leftsecond/(60*60*24)); 
+						$scope.playInfo.MatchTime=$scope.playInfo.MatchTime.replace(/\-/g,'/');
+						//游戏开始时间
+						$scope.playInfo.EndTime=$scope.playInfo.EndTime.replace(/\-/g,'/');
+//						游戏结束时间
+						var endDate = new Date($scope.playInfo.EndTime).getTime() -now.getTime(); 
+
+						var fkendtime = new Date($scope.playInfo.MatchTime).getTime()- now.getTime()+(1000*60*60*24);
+						
+						$scope.EndTime=getTMS(endDate);
+						$scope.fkendtime=getTMS(fkendtime);
+
+					   function getTMS(time){
+					   	var leftsecond=time/1000
+					   	var day1=Math.floor(leftsecond/(60*60*24)); 
 						var hour=Math.floor((leftsecond-day1*24*60*60)/3600); 
 						var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60); 
 						var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60); 
-						$scope.EndTime=hour+":"+minute+":"+second;
+						var hour=hour+day1*24;
+						
+						if(leftsecond<=0){
+							return "超时";
 						}
+						else{
+							return hour+":"+minute+":"+second;
+						}
+					   	
+					   }
+						
+						//var day1=parseInt(leftsecond/(24*60*60*6)); 
+						
+						
 						$scope.$apply();
 					},1000)
 					
 					
-				} else {
-					//未查询到游戏进度,新建游戏
-					$scope.status=-1;
-					$scope.playInfo=angular.extend({},rt.Data);
-					$cookieStore.remove('playInfo');
-					playInfo.set($scope.playInfo);
-					console.log($scope.playInfo);					
-					return false;
-					}				
+				} 
 			});
 			
 		  $scope.buildNewGame=function(){
@@ -818,11 +947,91 @@
 		  }
 		
 		 //0 新方案     50 以匹配    70 付款上传成功     100 已完成
+
+	}])
+	
+
+	.controller('newtouziCtrl', ['$scope', '$rootScope', 'API', 'userInfo','playInfo', '$state', 'lyer', '$stateParams','$cookieStore',function($scope, $rootScope, API, userInfo, playInfo,$state, lyer, $stateParams,$cookieStore) {
+		// unlogin($scope);
+		
+		if(!$rootScope.isLogin) {
+			$state.go('login');
+			console.log($rootScope.isLogin);
+			return false;
+		} 
+		
+		$rootScope.body_class = "touzi_bg";
+		$scope.footerShow = true;
+		$scope.titleShow = true;
+		$scope.warming=false;
+		$scope.upload_PicUrl=false;
+		$scope.cancel_btn=false;
 		
 		
-						
+		$scope.PlayCollection = $stateParams.PlayCollection;
+		$scope.PlayStage = $stateParams.PlayStage;
+		$scope.Playid=$stateParams.Playid;
+		console.log('$scope.PlayCollection'+$scope.PlayCollection);
+		console.log('$scope.PlayStage'+$scope.PlayStage);
 		
+		//进入游戏查询游戏进度
+			var params = {
+				'uid': userInfo.get().UId,
+				'playid':$scope.Playid,
+				'playcollection': $scope.PlayCollection,
+				'playstage': $scope.PlayStage
+			};
+		API.qtInt('/api/yqsPlay/PlaySpeed/', params)
+			.success(function(rt) {
+				rt = angular.fromJson(rt);				
+				if(rt.Code == 0) {
+					//查询得到游戏进度
+					
+					$scope.userInfo=angular.extend({},rt.Data);
+					$cookieStore.remove('userInfo');
+					userInfo.set($scope.userInfo);
+					
+				} 			
+			});
 			
+		  $scope.buildNewGame=function(){
+		  	$scope.warming=true;
+		  	
+		  }
+		  $scope.buildOrder=function(){
+		  	var params = {
+				'uid': userInfo.get().UId,
+				'playid':$scope.Playid,
+				'playcollection': $scope.PlayCollection,
+				'playstage': $scope.PlayStage
+			};
+			//确认无误,创建订单
+			API.qtInt('/api/yqsPlay/Play/', params)
+				.success(function(rt) {
+					rt = angular.fromJson(rt)
+					if(rt.Code == 0) {
+						lyer.msg(rt.Msg,function(){
+							$state.go('touzilist',{
+								Playid:$scope.Playid,
+								PlayCollection:$scope.PlayCollection,
+								PlayStage:$scope.PlayStage
+						})	
+						})
+						console.log(rt);
+						
+
+					} else {
+						lyer.msg(rt.Msg);
+						return false;
+					}
+				});
+			
+			$scope.warming=false;
+		  }
+		  $scope.cacel_build=function(){
+		  	//反悔,取消创建订单
+		  	$scope.warming=false;
+		  }	
 
 	}])
 	
@@ -831,6 +1040,7 @@
 		$rootScope.body_class = "order_bg";
 		$scope.footerShow = true;
 		$scope.titleShow = true;
+		$scope.query2=0;
 		if(!$rootScope.isLogin) {
 			$state.go('login');
 			console.log($rootScope.isLogin);
@@ -846,23 +1056,29 @@
 											$scope.userInfo=angular.extend({},rt.Data);
 											
 											$scope.order ='OrderId';
+											if(rt.Data.Data.length==0){
+												lyer.msg('暂无订单信息!');
+											}
 											
 											console.log(rt);
+											
 										} else {
 											lyer.msg(rt.Msg);
 											return false;
 										}
 									});
-		$scope.querylink=function(str){
-			$scope.query=str;
+		$scope.querylink=function(str1,str2){
+			$scope.query=str1;
+			$scope.query2=str2;
+			console.log($scope.query)
 		}
 
-		$scope.opendetail=function(OrderType,PlayCollection,PlayId,PlayStage,OrderId){
+		$scope.opendetail=function(OrderType,PlayCollection,PlayId,PlayStage,SchemeId){
 			console.log(OrderType);
 			console.log(PlayCollection);
 			console.log(PlayId);
 			console.log(PlayStage);
-			console.log(OrderId);
+			console.log(SchemeId);
 			if(OrderType==3){
 				$state.go('tixiandetail',{
 				fundId:OrderId
@@ -872,7 +1088,8 @@
 				$state.go('touzi',{
 						Playid:PlayId,
 						PlayCollection:PlayCollection,
-						PlayStage:PlayStage
+						PlayStage:PlayStage,
+						SchemeId:SchemeId
 					})
 			}
 		}
@@ -984,6 +1201,7 @@
 				    ,btn: ['好的', '不要']
 				    ,yes: function(index){
 				      layer.close(index);
+				      $scope.gamestart=true;
 				    }
 				    ,no:function(){
 				    	$state.go('index');
@@ -991,16 +1209,7 @@
 				  });
 			
 			$scope.startGame=function(){
-				$scope.gamestart=true;
-				lyer.msg('尽情去点钱吧',function(){
-					
-				});
 				
-				
-			}
-			$scope.choujiang=function(i){
-				console.log(i);
-				if(i==1||i==5||i==7){
 					API.qtInt('/api/yqslottery/Lottery/',{uid:userInfo.get().UId})
 									.success(function(rt) {
 										rt = angular.fromJson(rt)
@@ -1017,9 +1226,11 @@
 											return false;
 										}
 									});
-				}
-				  	
+				
+				
+				
 			}
+	
 	
 		}])
 	
@@ -1027,7 +1238,7 @@
 
 	//规则
 	.controller('guizeCtrl', ['$scope','$rootScope', function($scope,$rootScope) {
-		$rootScope.body_class = "login_bg";
+		$rootScope.body_class = "login_bgbg";
 		$scope.footerShow = true;
 		$scope.titleShow = true;
 	}])

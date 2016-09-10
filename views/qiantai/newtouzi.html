@@ -1,0 +1,70 @@
+<!-- saved from url=(0043)http://1.m.jdd.com/views/qiantai/register.html -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<sub-Header-Dirctive></sub-Header-Dirctive>
+		<link rel="stylesheet" href="public/css/layout.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			#dvHeader{ background:none; border: none;}
+		</style>
+		<header-directive></header-directive>
+			<div class="warp">
+			
+		
+				
+			<div class="touzi_box">
+			<!--没有订单 预览订单-->
+			<div class="">
+				
+				<div class="input_box clearfix">
+				<i class="icon_touzi"></i><span>投资金额</span>
+				<input type="text" value="{{userInfo.PlayMoney | currency:'￥' }}"   />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_sh"></i><span>收获</span>
+				<input type="text" value="{{userInfo.PlayIncome | currency:'¥'}}"  />
+				</div>
+				<div class="input_box clearfix">
+				<i class="icon_ghs"></i><span>理财规划书</span>
+				<input type="text" value="{{userInfo.PlayCharter}}" />
+				</div>
+				<div class="qrdk_btn" ng-click="buildNewGame()">
+					确认
+				</div>
+			</div>
+				
+			</div>
+			
+			
+			
+			<div class="mask" ng-show="warming"></div>
+			<div class="dialog" ng-show="warming">
+				<div class="close_btn" ng-click="cacel_build()"></div>
+				<div class="tltle">警告！</div>
+				<div class="des">检查订单是否有误，检查无误请点确认。</div>
+				<div class="btn" ng-click="buildOrder()">确定</div>
+			</div>
+			
+			<!--<div class="qrdk_btn">
+				确认
+			</div>
+			
+			<div class="qrdk_btn cancel_btn" ng-if="cancel_btn">
+				产品正在运行中……
+			</div>
+			
+			<div class="qrdk_btn" ng-if="!cancel_btn">
+				确认打款
+			</div>-->
+			
+		</div>
+	
+			
+	
+		<footer-Directive></footer-Directive>
+	</body>
+
+</html>

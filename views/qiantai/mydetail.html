@@ -31,10 +31,10 @@
 			</div>
 			
 			<div class="qianbaobox" style="padding: .25rem .03rem;" ng-if="type==3">
-				<ul class="tbth clearfix"><li>ID</li><li></li><li>姓名</li><li>游戏次数</li></ul>
+				<ul class="tbth clearfix"><li></li><li>姓名</li><li>游戏次数</li></ul>
 				<ul class="tbtd clearfix" ng-click="showmyteam($index)" ng-repeat="item in TeamInfo._MyTeams">
 					
-					<li>{{item.UId}}</li>
+					
 					<li ng-if="item.UFace!=''"><img src="http://api.cydhch.com/{{item.UFace}}"  /></li>
 					<li ng-if="item.UFace==''"><img src="images/user_bg.jpg"  /></li>
 					<li>{{item.Name}}</li>
